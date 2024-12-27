@@ -1,12 +1,13 @@
 name: Code Review GPT
 
 on:
-  pull_request_target:
+  pull_request:
     branches: [main]
 
 jobs:
   run_code_review:
     runs-on: ubuntu-latest
+    environment: OPENAI_API_KEY
     steps:
       - uses: actions/checkout@v3
         with:
