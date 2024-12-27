@@ -32,7 +32,7 @@ jobs:
         from openai import OpenAI
 
         # Define API key and DeepSeek client
-        client = OpenAI(api_key='${{ secrets.DEEPS SEEK_API_KEY }}', base_url='https://api.deepseek.com')
+        client = OpenAI(api_key='sk-30d2228c30b840d2a33178ea04fb246f', base_url='https://api.deepseek.com')
 
         # Request chat completion for code review
         response = client.chat.completions.create(
