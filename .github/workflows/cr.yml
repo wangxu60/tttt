@@ -6,7 +6,7 @@ permissions:
 
 on:
   pull_request_target:
-    types: [opened, reopened]
+    types: [opened, reopened, synchronize]
 
 jobs:
   test:
@@ -19,3 +19,4 @@ jobs:
           # optional
           LANGUAGE: Chinese
           IGNORE_PATTERNS: /node_modules,*.md # Regex pattern to ignore files, separated by comma
+          PROMPT: 对于代码改动给出解释
