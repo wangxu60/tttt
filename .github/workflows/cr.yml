@@ -16,6 +16,6 @@ jobs:
       - name: Code Review GPT
         uses: mattzcarey/code-review-gpt@v0.1.10
         with:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY: 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
           MODEL: 'gpt-4o'
           GITHUB_TOKEN: ${{ github.token }}
