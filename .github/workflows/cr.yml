@@ -1,21 +1,75 @@
-name: Code Review GPT
+name: Code Review with DeepSeek
 
 on:
   pull_request:
-    branches: [main]
+    types: [opened, synchronize, reopened]
 
 jobs:
-  run_code_review:
+  code-review:
     runs-on: ubuntu-latest
-    environment: OPENAI_API_KEY
+    
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+    # Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Code Review GPT
-        uses: mattzcarey/code-review-gpt@v0.1.10
-        with:
-          OPENAI_API_KEY: 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
-          MODEL: 'gpt-4o'
-          GITHUB_TOKEN: ${{ github.token }}
+    # Set up Python environment
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    # Install dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install openai requests
+
+    # Set up DeepSeek API and run code review
+    - name: Run Code Review with DeepSeek
+      run: |
+        python -c "
+        from openai import OpenAI
+
+        # Define API key and DeepSeek client
+        client = OpenAI(api_key='${{ secrets.DEEPS SEEK_API_KEY }}', base_url='https://api.deepseek.com')
+
+        # Request chat completion for code review
+        response = client.chat.completions.create(
+            model='deepseek-chat',
+            messages=[
+                {'role': 'system', 'content': 'You are a helpful assistant that reviews code.'},
+                {'role': 'user', 'content': 'Please review the following code: \n\n' + open('path_to_code_file.py').read()}
+            ],
+            stream=False
+        )
+
+        # Output the code review
+        print(response.choices[0].message.content)
+        "
+
+    # Optionally, you can add another step to comment on the PR with the review.
+    - name: Comment on PR with Review Feedback
+      run: |
+        REVIEW_TEXT=$(python -c "
+        from openai import OpenAI
+
+        client = OpenAI(api_key='${{ secrets.DEEPS SEEK_API_KEY }}', base_url='https://api.deepseek.com')
+
+        response = client.chat.completions.create(
+            model='deepseek-chat',
+            messages=[
+                {'role': 'system', 'content': 'You are a helpful assistant that reviews code.'},
+                {'role': 'user', 'content': 'Please review the following code: \n\n' + open('path_to_code_file.py').read()}
+            ],
+            stream=False
+        )
+
+        print(response.choices[0].message.content)
+        ")
+
+        # Use GitHub's API to comment on the pull request
+        curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+             -d "{\"body\":\"${REVIEW_TEXT}\"}" \
+             "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments"
+
