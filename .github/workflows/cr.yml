@@ -1,22 +1,20 @@
-name: Code Review
-
-permissions:
-  contents: read
-  pull-requests: write
+name: Code Review GPT
 
 on:
-  pull_request:
-    types: [opened, reopened, synchronize]
+  pull_request_target:
+    branches: [main]
 
 jobs:
-  test:
+  run_code_review:
     runs-on: ubuntu-latest
     steps:
-      - uses: anc95/ChatGPT-CodeReview@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Code Review GPT
+        uses: mattzcarey/code-review-gpt@v0.1.10
+        with:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          # optional
-          LANGUAGE: Chinese
-          IGNORE_PATTERNS: /node_modules,*.md # Regex pattern to ignore files, separated by comma
-          PROMPT: 对于代码改动给出解释
+          MODEL: 'gpt-4o'
+          GITHUB_TOKEN: ${{ github.token }}
