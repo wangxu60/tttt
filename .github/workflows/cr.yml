@@ -29,6 +29,3 @@ jobs:
           IGNORE_PATTERNS: /node_modules/**/*,*.md # glob pattern or regex pattern to ignore files, separated by comma
           # INCLUDE_PATTERNS: *.js,*.ts # glob pattern or regex pattern to include files, separated by comma
 
-          # IF you are using azure openai
-          AZURE_API_VERSION: xx
-          AZURE_DEPLOYMENT: xx
