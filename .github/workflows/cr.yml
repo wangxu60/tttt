@@ -45,11 +45,12 @@ jobs:
         client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'), base_url='https://api.deepseek.com')
 
         diff = '${{ steps.get-diff.outputs.diff }}'
+        change_file= '${{ steps.get-diff.outputs.changed_files }}'
         review_comment = client.chat.completions.create(
             model='deepseek-chat',
             messages=[
-                {'role': 'system', 'content': 'You are a helpful assistant'},
-                {'role': 'user', 'content': f'Review the following code changes:\n{diff}'},
+                {'role': 'system', 'content': 'You are a helpful code review assistant'},
+                {'role': 'user', 'content': f'Review the following code changes:\n{diff+change_file}'},
             ],
             stream=False
         ).choices[0].message.content
@@ -62,3 +63,4 @@ jobs:
       with:
         body: ${{ steps.code-review.outputs.review_comment }}
         token: ${{ secrets.GITHUB_TOKEN }}
+        comment-id: 557858210
