@@ -53,7 +53,7 @@ jobs:
             ],
             stream=False
         ).choices[0].message.content
-        print(review)
+        print(review_comment)
        
       shell: python
 
