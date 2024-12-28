@@ -53,8 +53,8 @@ jobs:
             ],
             stream=False
         ).choices[0].message.content
-
-        echo "::set-output name=review_comment::$review_comment"
+        print(review)
+       
       shell: python
 
     - name: Comment on Pull Request
