@@ -1,0 +1,21 @@
+name: Auto Reply to Pull Requests
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  add_comment:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Add a comment to the pull request
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Thank you for your pull request! We will review it shortly.'
+          })
