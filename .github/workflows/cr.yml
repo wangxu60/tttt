@@ -63,3 +63,4 @@ jobs:
       with:
         body: ${{ steps.code-review.outputs.review_comment }}
         token: ${{ secrets.GITHUB_TOKEN }}
+        comment-id: 557858210
