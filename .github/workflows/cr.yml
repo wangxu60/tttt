@@ -62,6 +62,7 @@ jobs:
     - name: Comment on Pull Request
       uses: peter-evans/create-or-update-comment@v4
       with:
+        issue-number: 22
         body: ${{ steps.code-review.outputs.review_comment }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        issue-number: 22
+        
