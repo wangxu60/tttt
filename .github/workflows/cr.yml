@@ -46,6 +46,7 @@ jobs:
 
         diff = '${{ steps.get-diff.outputs.diff }}'
         change_file= '${{ steps.get-diff.outputs.changed_files }}'
+        print(diff+change_file)
         review_comment = client.chat.completions.create(
             model='deepseek-chat',
             messages=[
@@ -63,4 +64,4 @@ jobs:
       with:
         body: ${{ steps.code-review.outputs.review_comment }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        comment-id: 557858210
+        issue-number: 22
