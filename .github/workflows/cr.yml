@@ -57,7 +57,7 @@ jobs:
             stream=False
         ).choices[0].message.content
         print(review_comment)
-        # review_comment=review_comment.replace("\n",",")
+        review_comment=review_comment.replace("\n",",")
         output_file = 'review_comment.txt'
         with open(output_file, 'w') as f:
             f.write(f'{review_comment}\n')
