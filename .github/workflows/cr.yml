@@ -32,7 +32,7 @@ jobs:
         git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} > diff.txt
         cat diff.txt
         echo "::set-output name=changed_files::$(cat changed_files.txt)"
-        echo "::set-output name=diff::$(cat diff.txt)"
+        echo "::set-output name=diff::$(tr '\n' ',' < diff.txt)"
       shell: bash
 
     - name: Run Code Review
@@ -57,6 +57,7 @@ jobs:
             stream=False
         ).choices[0].message.content
         print(review_comment)
+        review_comment.replace("\n",",")
         os.system(f'echo "::set-output name=review_comment::{review_comment}"')
       shell: python
       
