@@ -1,7 +1,7 @@
 name: Code Review
 
 on:
-  pull_request:
+  pull_request_target:
     branches:
       - main  # 你可以根据需要更改分支名称
 
@@ -13,6 +13,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
+        ref: ${{ github.head_ref }}
         fetch-depth: 0  # 获取完整的提交历史
 
     - name: Set up Python
