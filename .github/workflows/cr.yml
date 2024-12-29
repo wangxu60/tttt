@@ -75,4 +75,4 @@ jobs:
     - name: Comment PR
       uses: thollander/actions-comment-pull-request@v3
       with:
-        message: review_comment.txt
+        message: '${{ steps.get-know.outputs.review_comment }}'
