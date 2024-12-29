@@ -58,8 +58,10 @@ jobs:
         ).choices[0].message.content
         print(review_comment)
         review_comment=review_comment.replace("\n",",")
-        review_comment=shlex.quote(review_comment)
-        os.system(f'echo "::set-output name=review_comment::{review_comment}"')
+        output_file = 'review_comment.txt'
+        with open(output_file, 'w') as f:
+            f.write(f'{review_comment}\n')
+
       shell: python
       
     - name: Checkout
@@ -68,4 +70,4 @@ jobs:
     - name: Comment PR
       uses: thollander/actions-comment-pull-request@v3
       with:
-        message: '${{ steps.code-review.outputs.review_comment }}'
+        file_path: review_comment.txt
