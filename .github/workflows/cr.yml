@@ -67,7 +67,7 @@ jobs:
     - name: getknow
       id: get-know
       run: |
-        echo "::set-output name=review_comment::$(tr '\n' '2024' < diff.txt)"
+        echo "::set-output name=review_comment::$(tr '2024' '\n' < diff.txt)"
         
     - name: Checkout
       uses: actions/checkout@v3
