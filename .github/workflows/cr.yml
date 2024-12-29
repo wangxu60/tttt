@@ -57,7 +57,7 @@ jobs:
             stream=False
         ).choices[0].message.content
         print(review_comment)
-       
+        os.system(f'echo "::set-output name=review_comment::{review_comment}"')
       shell: python
       
     - name: Checkout
