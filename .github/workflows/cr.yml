@@ -70,4 +70,4 @@ jobs:
     - name: Comment PR
       uses: thollander/actions-comment-pull-request@v3
       with:
-        file_path: review_comment.txt
+        file-path: review_comment.txt
