@@ -60,7 +60,7 @@ jobs:
         review_comment=review_comment.replace("\n",",")
         output_file = 'review_comment.txt'
         with open(output_file, 'w') as f:
-          f.write(f'{review_comment}\n')
+            f.write(f'{review_comment}\n')
 
       shell: python
       
