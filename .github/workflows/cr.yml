@@ -68,6 +68,7 @@ jobs:
       id: get-know
       run: |
         echo "::set-output name=review_comment::$(cat review_comment.txt)"
+        
     - name: Checkout
       uses: actions/checkout@v3
 
