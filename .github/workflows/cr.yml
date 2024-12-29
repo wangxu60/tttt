@@ -13,6 +13,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
+        ref: ${{ github.head_ref }}
         fetch-depth: 0  # 获取完整的提交历史
 
     - name: Set up Python
@@ -65,5 +66,4 @@ jobs:
     - name: Comment PR
       uses: thollander/actions-comment-pull-request@v3
       with:
-        message: |
-          ${{ steps.code-review.outputs.review_comment }}
+        message: '${{ steps.code-review.outputs.review_comment }}'
