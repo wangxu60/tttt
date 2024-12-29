@@ -13,7 +13,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        ref: ${{ github.head_ref }}
+        ref:  ${{ github.event.pull_request.head.sha }}
         fetch-depth: 0  # 获取完整的提交历史
 
     - name: Set up Python
@@ -29,8 +29,8 @@ jobs:
     - name: Get Pull Request Diff
       id: get-diff
       run: |
-        git diff --name-only HEAD^ HEAD | grep '\.py$' > changed_files.txt
-        git diff HEAD^ HEAD > diff.txt
+        git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} > diff.txt
+        cat diff.txt
         echo "::set-output name=changed_files::$(cat changed_files.txt)"
         echo "::set-output name=diff::$(cat diff.txt)"
       shell: bash
