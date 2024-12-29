@@ -32,7 +32,7 @@ jobs:
         git diff ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} > diff.txt
         cat diff.txt
         echo "::set-output name=changed_files::$(cat changed_files.txt)"
-        echo "::set-output name=diff::$(tr '\n' ',' < diff.txt)"
+        echo "::set-output name=diff::$(tr '\n' '2024' < diff.txt)"
       shell: bash
 
     - name: Run Code Review
@@ -67,7 +67,7 @@ jobs:
     - name: getknow
       id: get-know
       run: |
-        echo "::set-output name=review_comment::$(cat review_comment.txt)"
+        echo "::set-output name=review_comment::$(tr '\n' '2024' < diff.txt)"
         
     - name: Checkout
       uses: actions/checkout@v3
