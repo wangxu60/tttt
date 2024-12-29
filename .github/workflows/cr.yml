@@ -42,7 +42,7 @@ jobs:
       run: |
         import openai
         import os
-
+        import json
         client = openai.OpenAI(api_key=os.getenv('OPENAI_API_KEY'), base_url='https://api.deepseek.com')
 
         diff = '${{ steps.get-diff.outputs.diff }}'
@@ -57,7 +57,8 @@ jobs:
             stream=False
         ).choices[0].message.content
         print(review_comment)
-        # review_comment=review_comment.replace("\n",",")
+        review_comment=review_comment.replace("\n",",")
+        review_comment=json.dumps(review_comment)
         os.system(f'echo "::set-output name=review_comment::{review_comment}"')
       shell: python
       
